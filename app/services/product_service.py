@@ -5,9 +5,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 def recommend_collaborative(df_user_item, current_user_id, limit_all, limit_one, limit_user):
     if df_user_item is None:
         return []
-    
+
     df_user_item = df_user_item.infer_objects()
-    
+
     user_item_matrix = df_user_item.pivot_table(index='user_id', columns='product_id', values='score', fill_value=0)
     print(f"user_item_matrix:\n {user_item_matrix}")
 
@@ -33,14 +33,6 @@ def recommend_collaborative(df_user_item, current_user_id, limit_all, limit_one,
     # Lấy danh sách products mà similar_users đã tương tác
     similar_users_products = df_user_item[df_user_item['user_id'].isin(similar_users)].copy()
     print(f"similar_users_products:\n {similar_users_products}")
-    
-    # Lấy danh sách products mà current_user đã tương tác
-    current_user_products = df_user_item[df_user_item['user_id'] == current_user_id]["product_id"].tolist()
-    print(f"current_user_products:\n {current_user_products}")
-
-    # Loại bỏ products mà current_user đã tương tác ra khỏi similar_users_products
-    similar_users_products = similar_users_products.set_index("product_id").drop(current_user_products, errors="ignore").reset_index()
-    print(f"similar_users_products (đã loại bỏ products của current_user):\n {similar_users_products}")
 
     # Gán thứ tự xuất hiện của từng user dựa vào danh sách similar_users
     similar_users_products["user_order"] = similar_users_products["user_id"].astype("category")
@@ -67,7 +59,10 @@ def recommend_collaborative(df_user_item, current_user_id, limit_all, limit_one,
 
     return suggested_product_ids
 
-tfidf = TfidfVectorizer()
+with open('vietnamese-stopwords.txt', 'r', encoding='utf-8') as file:
+    vietnamese_stop_words = [line.strip() for line in file]
+
+tfidf = TfidfVectorizer(stop_words=vietnamese_stop_words)
 tfidf_matrix = None
 cosine_sim = None
 
@@ -78,7 +73,7 @@ def recommend_contentbased(df_item, product_id, limit_all):
     global tfidf_matrix, cosine_sim
 
     if tfidf_matrix is None or cosine_sim is None:
-        tfidf_matrix = tfidf.fit_transform(df_item["item"])
+        tfidf_matrix = tfidf.fit_transform(df_item["content"])
         print(f"tfidf_matrix: {tfidf_matrix}")
 
         cosine_sim = cosine_similarity(tfidf_matrix)
