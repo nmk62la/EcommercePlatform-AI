@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
+from underthesea import word_tokenize
 
 def recommend_collaborative(df_user_item, current_user_id, limit_all, limit_one, limit_user):
     if df_user_item is None:
@@ -59,10 +60,20 @@ def recommend_collaborative(df_user_item, current_user_id, limit_all, limit_one,
 
     return suggested_product_ids
 
+# Hàm tokenizer tùy chỉnh sử dụng underthesea
+def vietnamese_tokenizer(text):
+    return word_tokenize(text)
+
+# Danh sách từ dừng
 with open('vietnamese-stopwords.txt', 'r', encoding='utf-8') as file:
     vietnamese_stop_words = [line.strip() for line in file]
 
-tfidf = TfidfVectorizer(stop_words=vietnamese_stop_words)
+# Khởi tạo TfidfVectorizer với tokenizer tùy chỉnh và từ dừng
+tfidf = TfidfVectorizer(
+    tokenizer=vietnamese_tokenizer,
+    stop_words=vietnamese_stop_words,
+    lowercase=True
+)
 tfidf_matrix = None
 cosine_sim = None
 

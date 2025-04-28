@@ -188,9 +188,9 @@ class DatabaseConnection:
             df_item = df_item.merge(df_brand, on="brand_id", how="left")
 
             df_item["content"] = (
-                    df_item["product_name"].fillna("") + " " +
                     df_item["category_name"].fillna("") + " " +
                     df_item["brand_name"].fillna("") + " " +
+                    df_item["product_name"].fillna("") + " " +
                     df_item["product_description"].fillna("") + " " +
                     df_item["product_details"].fillna("")
             )
