@@ -2,6 +2,8 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 from underthesea import word_tokenize
+from flask import jsonify, request
+import json
 
 def recommend_collaborative(df_user_item, current_user_id, limit_all, limit_one, limit_user):
     if df_user_item is None:
@@ -118,3 +120,65 @@ def get_products_similar(df_item, product_id, cosine_sim, limit_all):
     print(f"product_indices: {product_indices}")
 
     return df_item.iloc[product_indices]
+
+def chatbot(file_path):
+    config = load_chatbot_config(file_path)
+    if not config:
+        return jsonify({"error": "Không thể tải cấu hình chatbot"}), 500
+
+    data = request.get_json()
+    selected_id = data.get('selected_id') if data else None
+
+    if not selected_id:
+        # Trả về danh sách tùy chọn ban đầu
+        return jsonify({
+            "message": config['name_title'],
+            "has_next": config.get('has_next', False),
+            "is_ai": True,
+            "options": [
+                {"id": opt['id'], "title": opt['title'], "has_next": opt.get('has_next', False)}
+                for opt in config.get('options', [])
+            ]
+        })
+
+    # Tìm tùy chọn được chọn theo ID
+    selected_option = find_option_by_id(config.get('options', []), selected_id)
+    if not selected_option:
+        return jsonify({"error": f"ID '{selected_id}' không hợp lệ"}), 400
+
+    # Trả về phản hồi
+    response = {
+        "message": selected_option['name_title'],
+        "has_next": selected_option.get('has_next', False),
+        "is_ai": True,
+    }
+    if selected_option.get('has_next', False):
+        response["options"] = [
+            {"id": opt['id'], "title": opt['title'], "has_next": opt.get('has_next', False)}
+            for opt in selected_option.get('options', [])
+        ]
+    else:
+        response["answer"] = selected_option.get('answer', '')
+
+    return jsonify(response)
+
+def load_chatbot_config(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+        return data['chatbot_config']
+    except FileNotFoundError:
+        return None
+    except json.JSONDecodeError:
+        return None
+
+def find_option_by_id(options, target_id):
+    # Tìm tùy chọn theo ID trong cây cấu trúc lồng nhau
+    for option in options:
+        if option['id'] == target_id:
+            return option
+        if 'options' in option:
+            result = find_option_by_id(option['options'], target_id)
+            if result:
+                return result
+    return None

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from app.services.product_service import recommend_collaborative, recommend_contentbased
+from app.services.product_service import recommend_collaborative, recommend_contentbased, chatbot
 from app.models.product import DatabaseConnection
 
 product_controller = Blueprint('product_controller', __name__)
@@ -51,3 +51,8 @@ def api_recommend_contentbased():
         "interacted": current_product_id,
         "result": listProduct
         })
+
+@product_controller.route('/api/v1/ai/chatbot', methods=['POST'])
+def api_chatbot():
+    file_path = 'chatbot.json'
+    return chatbot(file_path)
