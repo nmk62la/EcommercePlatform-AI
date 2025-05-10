@@ -1,70 +1,70 @@
 {
   "chatbot_config": {
-    "name_title": "Chào bạn! Hãy chọn một câu hỏi thường gặp hoặc nhấn \"Chat với Shop\" để gặp nhân viên tư vấn.",
+    "name_title": "Chào bạn! Hãy chọn một câu hỏi thường gặp hoặc nhấn \"Chat với Shop\" để gặp nhân viên tư vấn",
     "has_next": true,
     "options": [
       {
         "id": "1",
         "name_title": "Vui lòng chọn một câu hỏi thường gặp bên dưới nhé!",
-        "title": "Hoá đơn - Trả góp - Giá sỉ",
+        "title": "Mua sắm - Tư vấn sản phẩm",
         "has_next": true,
         "options": [
           {
             "id": "1.1",
             "name_title": "",
-            "title": "Shop có hỗ trợ trả góp không?",
+            "title": "Tìm kiếm sản phẩm như thế nào?",
             "has_next": false,
-            "answer": "Để mua trả góp bạn cần:\n1. Có thẻ tín dụng Visa/Master card thuộc các ngân hàng: Shinhan bank, Citibank, HSBC, TPbank, Standard Chartered, Sacombank, BIDV, VPbank, MSB, FE Credit, ACB, VIB, Vietcombank.\n2. Chỉ mua 1 sản phẩm có giá trị từ 3 triệu đồng trở lên.\n3. Khi bạn nhận hàng và nhấn “Đã nhận hàng”, đơn hàng sẽ được gửi đến ngân hàng để chuyển đổi trả góp.\n4. Để biết thêm chi tiết, truy cập https://shopee.vn/m/tra-gop-0-lai-suat hoặc liên hệ Shopee 19001221."
+            "answer": "Để tìm kiếm sản phẩm bạn có thể nhập từ khóa tìm kiếm trên thanh tìm kiếm sản phẩm, sau đó bạn sẽ được chuyển hướng sang trang tìm kiếm, ở đây bạn có thể lọc sản phẩm theo danh mục, thương hiệu, giá bán, đánh giá bên góc trái màn hình hoặc sắp xếp sản phẩm theo thứ tự mới nhất, cũ nhất theo ngày đăng sản phẩm hoặc giá bán bên góc phải màn hình"
           },
           {
             "id": "1.2",
             "name_title": "",
-            "title": "Làm cách nào để xuất hóa đơn mua hàng?",
+            "title": "Thông tin chi tiết sản phẩm",
             "has_next": false,
-            "answer": "Để xuất hóa đơn:\n- Cho công ty: Ngay trong ngày đặt hàng, nhấn \"Chat với Shop\" cung cấp mã số thuế, tên công ty, địa chỉ công ty, email nhận hóa đơn.\n- Cho cá nhân: Sau khi đặt hàng thành công, nhấn \"Chat với Shop\" cung cấp mã đơn hàng và email cá nhân. Shop sẽ gửi hóa đơn qua email trong 3-5 ngày làm việc."
+            "answer": "Để biết về thông tin chi tiết sản phẩm bạn vui lòng click chọn sản phẩm để xem chi tiết gồm các thông tin như hình ảnh sản phẩm, tên sản phẩm, mô tả về sản phẩm, giá bán, biến thể sản phẩm (nếu có), thông tin về cửa hàng cũng như đánh giá về sản phẩm. Nếu bạn muốn mua sản phẩm hãy ấn thêm vào giỏ hàng để tiến hành thanh toán nhé!"
           },
           {
             "id": "1.3",
             "name_title": "",
-            "title": "Shop có hỗ trợ chính sách giá sỉ không?",
+            "title": "Tư vấn chọn sản phẩm",
             "has_next": false,
-            "answer": "Hiện tại shop chưa hỗ trợ chính sách bán sỉ. Bạn có thể đặt nhiều đơn hàng để mua số lượng lớn."
+            "answer": "HKK Uptech chuyên bán các sản phẩm về thiết bị điện tử như điện thoại, laptop, phụ kiện di động, ... Các sản phẩm của chúng tôi vô cùng chất lượng, bạn có thểm tìm kiếm sản phẩm và xem thông tin chi tiết về sản phẩm để có được lựa chọn tốt nhất nhé!"
           }
         ]
       },
       {
         "id": "2",
         "name_title": "Vui lòng chọn một câu hỏi thường gặp bên dưới nhé!",
-        "title": "Thời gian giao hàng và đồng kiểm",
+        "title": "Đặt hàng - Thanh toán",
         "has_next": true,
         "options": [
           {
             "id": "2.1",
             "name_title": "",
-            "title": "Khi nào tôi nhận được hàng?",
+            "title": "Hướng dẫn đặt hàng",
             "has_next": false,
-            "answer": "Thời gian nhận hàng:\n- Nội thành TP.HCM/HN: 1 ngày.\n- Các tỉnh khác: 2-3 ngày.\n- Ngoại thành/huyện/xã: thêm 1-2 ngày.\n- Huyện/đảo: 6-10 ngày.\nLưu ý: Thời gian tính từ khi nhà vận chuyển lấy hàng, không giao Chủ nhật. Nếu quá thời hạn, nhấn \"Chat với Shop\" để được hỗ trợ."
+            "answer": "Để đặt hàng bạn hay chọn các sản phẩm trong giỏ hàng và nhấn \"Thanh toán\", sau đó bạn sẽ được đưa đến trang thanh toán, tại đây bạn hãy nhập đầy đủ các thông tin như địa chỉ nhận hàng, ghi chú đơn hàng (nếu có), chọn phương thức thanh toán và nhấn nút \"Đặt hàng\""
           },
           {
             "id": "2.2",
             "name_title": "",
-            "title": "Làm cách nào để biết hàng của tôi đang ở đâu?",
+            "title": "Làm cách nào để biết trạng thái đơn hàng?",
             "has_next": false,
-            "answer": "Bạn có thể kiểm tra hành trình đơn hàng bằng mã vận đơn tại:\n- https://ghn.vn/ (Giao Hàng Nhanh)\n- https://giaohangtietkiem.vn/ (Giao Hàng Tiết Kiệm)\n- https://jtexpress.vn/vn/track.html (J&T)\n- https://spx.vn/ (Shopee Express)\nĐể biết mã vận đơn, vào Đơn mua -> Đang giao -> xem Thông tin vận chuyển."
+            "answer": "Bạn có thể kiểm tra trạng thái đơn hàng bằng cách vào \"Tài khoản\" -> \"Đơn hàng\", tại đây bạn sẽ nhìn thấy lịch sử tất cả các đơn hàng, hãy click vào đơn hàng mà bạn muốn xem trạng thái để biết đơn hàng của bạn đang ở trạng thái nào nhé!"
           },
           {
             "id": "2.3",
             "name_title": "",
-            "title": "Shop có hỗ trợ đồng kiểm không?",
+            "title": "Hỗ trợ thanh toán",
             "has_next": false,
-            "answer": "Hiện Shopee chưa hỗ trợ đồng kiểm khi nhận hàng. Nếu sản phẩm có vấn đề, bạn có thể bấm Trả hàng/Hoàn tiền trong 7 ngày kể từ khi nhận hàng."
+            "answer": "Hiện HKK Uptech chỉ hỗ trợ 2 phương thức thanh toán bao gồm thanh toán khi nhận hàng hoặc bạn có thể thanh toán bằng VN PAY"
           }
         ]
       },
       {
         "id": "3",
         "name_title": "Vui lòng chọn một câu hỏi thường gặp bên dưới nhé!",
-        "title": "Chính hãng - Chính sách trả hàng hoàn tiền",
+        "title": "Khuyến mãi - Chính sách",
         "has_next": true,
         "options": [
           {
@@ -72,21 +72,23 @@
             "name_title": "",
             "title": "Sản phẩm có chính hãng, nguyên seal không?",
             "has_next": false,
-            "answer": "Shop cam kết tất cả sản phẩm là hàng chính hãng, nguyên seal, mới 100%."
+            "answer": "Shop cam kết tất cả sản phẩm là hàng chính hãng, nguyên seal, mới 100%"
           },
           {
             "id": "3.2",
             "name_title": "",
-            "title": "Quy trình trả hàng/hoàn tiền của Shopee là gì?",
+            "title": "Thông tin khuyến mãi",
             "has_next": false,
-            "answer": "Nếu sản phẩm có vấn đề, trong 7 ngày kể từ khi nhận hàng, bấm Yêu cầu trả hàng/Hoàn tiền. Thời gian xử lý: 3-5 ngày làm việc. Theo dõi email/tin nhắn/thông báo từ Shopee và làm theo hướng dẫn."
+            "answer": "Mỗi shop sẽ có mỗi khuyến mãi khác nhau, bạn hãy xem thông tin chi tiết về sản phẩm hoặc nhấn \"Chat với Shop\" để biết thêm thông tin nhé!",
+            "has_chat_with_shop": true
           },
           {
             "id": "3.3",
             "name_title": "",
-            "title": "Bao lâu tôi sẽ nhận được tiền hoàn?",
+            "title": "Chính sách bảo hành",
             "has_next": false,
-            "answer": "Thời gian hoàn tiền:\n- COD/Ví Shopee/I-banking: Hoàn về Ví Shopee trong 24h làm việc.\n- Ví AirPay: Hoàn trong 24h làm việc.\n- Thẻ tín dụng: Hoàn trong 7-14 ngày làm việc."
+            "answer": "Nhấn \"Chat với Shop\" để biết thêm thông tin về bảo hành nhé!",
+            "has_chat_with_shop": true
           }
         ]
       }

@@ -159,6 +159,7 @@ def chatbot(file_path):
         ]
     else:
         response["answer"] = selected_option.get('answer', '')
+        response["has_chat_with_shop"] = selected_option.get('has_chat_with_shop', False)
 
     return jsonify(response)
 
