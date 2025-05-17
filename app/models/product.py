@@ -50,7 +50,7 @@ class DatabaseConnection:
             df_order = pd.DataFrame(order_data, columns=['user_id', 'product_id', 'quantity'])
             df_order['score'] = df_order['quantity'] * 4
 
-            print(f"df_order:\n {df_order}")
+            # print(f"df_order:\n {df_order}")
 
             # Lấy dữ liệu từ bảng user_product_following (trọng số = 3)
             followings_query = """
@@ -65,7 +65,7 @@ class DatabaseConnection:
             df_followings = pd.DataFrame(followings_data, columns=['user_id', 'product_id', 'count'])
             df_followings['score'] = df_followings['count'] * 3
 
-            print(f"df_followings:\n {df_followings}")
+            # print(f"df_followings:\n {df_followings}")
 
             # Lấy dữ liệu từ bảng cart (trọng số = 2)
             cart_query = """
@@ -83,7 +83,7 @@ class DatabaseConnection:
             df_cart = pd.DataFrame(cart_data, columns=['user_id', 'product_id', 'quantity'])
             df_cart['score'] = df_cart['quantity'] * 2
 
-            print(f"df_cart:\n {df_cart}")
+            # print(f"df_cart:\n {df_cart}")
 
             # Lấy dữ liệu từ bảng view_product (trọng số = 1)
             view_products_query = """
@@ -99,7 +99,7 @@ class DatabaseConnection:
             df_view_products = pd.DataFrame(view_products_data, columns=['user_id', 'product_id', 'count'])
             df_view_products['score'] = df_view_products['count'] // 10
 
-            print(f"df_view_products:\n {df_view_products}")
+            # print(f"df_view_products:\n {df_view_products}")
 
             # Lấy dữ liệu từ bảng review (trọng số = 1)
             review_query = """
@@ -115,7 +115,7 @@ class DatabaseConnection:
             review_data = cursor.fetchall()
             df_review = pd.DataFrame(review_data, columns=['user_id', 'product_id', 'score'])
 
-            print(f"df_review:\n {df_review}")
+            # print(f"df_review:\n {df_review}")
 
             cursor.close()
             connection.close()
@@ -203,34 +203,68 @@ class DatabaseConnection:
             print(f"Lỗi lấy df_item: {str(e)}")
             return None
 
-    def get_response_list_product(self, list_product_id):
+    def get_response_list_product(self, list_product_id, page, size):
         if not list_product_id:
-            return []
+            return {
+                "data": [],
+                "totalPages": 0,
+                "pageSize": size,
+                "totalElements": 0,
+                "currentPage": page,
+                "hasNext": False,
+                "hasPrevious": False,
+                "nextPage": False,
+                "previousPage": False
+            }
 
         try:
             connection = self.get_connection()
             if not connection:
-                return []
+                return {
+                    "data": [],
+                    "totalPages": 0,
+                    "pageSize": size,
+                    "totalElements": 0,
+                    "currentPage": page,
+                    "hasNext": False,
+                    "hasPrevious": False,
+                    "nextPage": False,
+                    "previousPage": False
+                }
 
             cursor = connection.cursor()
 
+            page = max(1, int(page))
+            size = max(1, int(size))
+            offset = (page - 1) * size
+
             product_query = """
-                SELECT id, name, video_url, main_image_url, sale_price, original_price, sold, slug FROM product
+                SELECT id, name, video_url, main_image_url, sale_price, original_price, sold, slug
+                FROM product
                 WHERE id = ANY(%s) AND is_available = TRUE AND is_blocked = FALSE AND is_deleted = FALSE
                 ORDER BY array_position(%s, id)
+                LIMIT %s OFFSET %s
             """
-            cursor.execute(product_query, (list_product_id, list_product_id))
+            cursor.execute(product_query, (list_product_id, list_product_id, size, offset))
             products = cursor.fetchall()
+
+            count_query = """
+                SELECT COUNT(*)
+                FROM product
+                WHERE id = ANY(%s) AND is_available = TRUE AND is_blocked = FALSE AND is_deleted = FALSE
+            """
+            cursor.execute(count_query, (list_product_id,))
+            total_elements = cursor.fetchone()[0]
 
             cursor.close()
             connection.close()
 
-            listProduct = []
+            data = []
             for product in products:
                 id, name, video_url, main_image_url, sale_price, original_price, sold, slug = product
                 percent_discount = round(((original_price - sale_price) / original_price) * 100) if original_price > sale_price else 0
 
-                listProduct.append({
+                data.append({
                     "id": id,
                     "name": name,
                     "videoUrl": video_url,
@@ -241,8 +275,34 @@ class DatabaseConnection:
                     "slug": slug
                 })
 
-            return listProduct
+            total_pages = (total_elements + size - 1) // size
+            has_next = page < total_pages
+            has_previous = page > 1
+            next_page = page + 1 if has_next else False
+            previous_page = page - 1 if has_previous else False
+
+            return {
+                "data": data,
+                "totalPages": total_pages,
+                "pageSize": size,
+                "totalElements": total_elements,
+                "currentPage": page,
+                "hasNext": has_next,
+                "hasPrevious": has_previous,
+                "nextPage": next_page,
+                "previousPage": previous_page
+            }
 
         except Exception as e:
             print(f"Connect database fail: {str(e)}")
-            return []
+            return {
+                "data": [],
+                "totalPages": 0,
+                "pageSize": size,
+                "totalElements": 0,
+                "currentPage": page,
+                "hasNext": False,
+                "hasPrevious": False,
+                "nextPage": False,
+                "previousPage": False
+            }
