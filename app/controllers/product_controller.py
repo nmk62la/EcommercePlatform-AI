@@ -29,10 +29,6 @@ def api_recommend_contentbased():
     page = request.args.get("page")
     size = request.args.get("size")
     current_product_id = request.args.get("product_id")
-    print(f"limit_all: ", limit_all)
-    print(f"page: ", page)
-    print(f"size: ", size)
-    print(f"current_product_id: ", current_product_id)
 
     if not current_product_id:
         return {
